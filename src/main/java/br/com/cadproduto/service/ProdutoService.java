@@ -2,7 +2,7 @@ package br.com.cadproduto.service;
 
 import br.com.cadproduto.exception.NotFoundException;
 import br.com.cadproduto.exception.ValidationException;
-import br.com.cadproduto.model.ProdutoModel;
+import br.com.cadproduto.entity.ProdutoEntity;
 import br.com.cadproduto.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -17,31 +17,31 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public ProdutoModel salvar(ProdutoModel produtoModel) {
-        if (produtoModel.getNome() == null) {
+    public ProdutoEntity salvar(ProdutoEntity produtoEntity) {
+        if (produtoEntity.getNome() == null) {
             throw new ValidationException("Nome não pode ser nulo");
         }
 
-        if (produtoModel.getQuantidade() == null) {
+        if (produtoEntity.getQuantidade() == null) {
             throw new ValidationException("Quantidade não pode ser nulo");
         }
 
-        return produtoRepository.save(produtoModel);
+        return produtoRepository.save(produtoEntity);
     }
 
     public void deletar(Long id) {
         produtoRepository.deleteById(id);
     }
 
-    public ProdutoModel getById(Long id) {
-        ProdutoModel produtoModel = produtoRepository.findById(id).orElse(null);
-        if (produtoModel == null) {
+    public ProdutoEntity getById(Long id) {
+        ProdutoEntity produtoEntity = produtoRepository.findById(id).orElse(null);
+        if (produtoEntity == null) {
             throw new NotFoundException("ID não encontrado");
         }
-        return produtoModel;
+        return produtoEntity;
     }
 
-    public List<ProdutoModel> produtoModelList() {
+    public List<ProdutoEntity> produtoModelList() {
         return produtoRepository.findAll();
     }
 

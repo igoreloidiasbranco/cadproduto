@@ -1,7 +1,7 @@
 package br.com.cadproduto;
 
 
-import br.com.cadproduto.model.ProdutoModel;
+import br.com.cadproduto.entity.ProdutoEntity;
 import br.com.cadproduto.service.ProdutoService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,24 +16,24 @@ public class CadProdutoServiceTest {
 
     @Test
     public void criar_produto() {
-        ProdutoModel produtoModel = new ProdutoModel();
-        produtoModel.setNome("produto teste").setQuantidade(7);
+        ProdutoEntity produtoEntity = new ProdutoEntity();
+        produtoEntity.setNome("produto teste").setQuantidade(7);
 
-        ProdutoModel produtoModelSalvo = produtoService.salvar(produtoModel);
+        ProdutoEntity produtoEntitySalvo = produtoService.salvar(produtoEntity);
 
-        Assertions.assertEquals(produtoModel.getNome() ,produtoModelSalvo.getNome());
-        Assertions.assertEquals(produtoModel.getQuantidade(), produtoModelSalvo.getQuantidade());
+        Assertions.assertEquals(produtoEntity.getNome() , produtoEntitySalvo.getNome());
+        Assertions.assertEquals(produtoEntity.getQuantidade(), produtoEntitySalvo.getQuantidade());
 
     }
 
     @Test
     public void criar_com_nome_nulo() {
-        ProdutoModel produtoModel = new ProdutoModel();
-        produtoModel.setNome(null).setQuantidade(1);
+        ProdutoEntity produtoEntity = new ProdutoEntity();
+        produtoEntity.setNome(null).setQuantidade(1);
 
 
         Exception exception = Assertions.assertThrows(Exception.class, () -> {
-            ProdutoModel produtoModelTeste = produtoService.salvar(produtoModel);
+            ProdutoEntity produtoEntityTeste = produtoService.salvar(produtoEntity);
         });
 
         Assertions.assertEquals("Nome não pode ser nulo" , exception.getMessage());
@@ -42,10 +42,10 @@ public class CadProdutoServiceTest {
 
     @Test
     public void criar_com_quantidade_nulo() {
-        ProdutoModel produtoModel = new ProdutoModel().setNome("Produto teste").setQuantidade(null);
+        ProdutoEntity produtoEntity = new ProdutoEntity().setNome("Produto teste").setQuantidade(null);
 
         Exception exception = Assertions.assertThrows(Exception.class, () -> {
-            ProdutoModel produtoModelTeste = produtoService.salvar(produtoModel);
+            ProdutoEntity produtoEntityTeste = produtoService.salvar(produtoEntity);
         });
 
         Assertions.assertEquals("Quantidade não pode ser nulo" , exception.getMessage());
@@ -53,16 +53,16 @@ public class CadProdutoServiceTest {
 
     @Test
     public void deletar_produto() {
-        ProdutoModel produtoModel = new ProdutoModel();
-        produtoModel.setNome("produto teste").setQuantidade(7);
-        ProdutoModel produtoModelSalvo = produtoService.salvar(produtoModel);
+        ProdutoEntity produtoEntity = new ProdutoEntity();
+        produtoEntity.setNome("produto teste").setQuantidade(7);
+        ProdutoEntity produtoEntitySalvo = produtoService.salvar(produtoEntity);
 
-        Long idSalvo = produtoModelSalvo.getId();
+        Long idSalvo = produtoEntitySalvo.getId();
 
         produtoService.deletar(idSalvo);
 
         Exception exception = Assertions.assertThrows(Exception.class, () -> {
-            ProdutoModel produtoModelDeletado = produtoService.getById(idSalvo);
+            ProdutoEntity produtoEntityDeletado = produtoService.getById(idSalvo);
         });
 
         Assertions.assertEquals("ID não encontrado" , exception.getMessage());
@@ -73,7 +73,7 @@ public class CadProdutoServiceTest {
     public void testar_GetbyId_nulo() {
         Exception expeption = Assertions.assertThrows(Exception.class, () -> {
 
-            ProdutoModel produtoModel = produtoService.getById(20L);
+            ProdutoEntity produtoEntity = produtoService.getById(20L);
         });
 
         Assertions.assertEquals("ID não encontrado" , expeption.getMessage());
@@ -81,17 +81,17 @@ public class CadProdutoServiceTest {
 
     @Test
     public void testar_GetbyId_valido() {
-        ProdutoModel produtoModel = new ProdutoModel();
-        produtoModel.setNome("produto teste").setQuantidade(2);
+        ProdutoEntity produtoEntity = new ProdutoEntity();
+        produtoEntity.setNome("produto teste").setQuantidade(2);
 
-        ProdutoModel produtoModelSalvo = produtoService.salvar(produtoModel);
+        ProdutoEntity produtoEntitySalvo = produtoService.salvar(produtoEntity);
 
-        Long idValido = produtoModelSalvo.getId();
+        Long idValido = produtoEntitySalvo.getId();
 
-        ProdutoModel produtoModelTesteGet = produtoService.getById(idValido);
-        Assertions.assertEquals((produtoModelSalvo.getId()), produtoModelTesteGet.getId());
-        Assertions.assertEquals(produtoModelSalvo.getNome(), produtoModelTesteGet.getNome());
-        Assertions.assertEquals(produtoModelSalvo.getQuantidade(), produtoModelTesteGet.getQuantidade());
+        ProdutoEntity produtoEntityTesteGet = produtoService.getById(idValido);
+        Assertions.assertEquals((produtoEntitySalvo.getId()), produtoEntityTesteGet.getId());
+        Assertions.assertEquals(produtoEntitySalvo.getNome(), produtoEntityTesteGet.getNome());
+        Assertions.assertEquals(produtoEntitySalvo.getQuantidade(), produtoEntityTesteGet.getQuantidade());
 
     }
 

@@ -1,10 +1,10 @@
-package br.com.cadproduto.model;
+package br.com.cadproduto.entity;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "produto")
-public class ProdutoModel {
+public class ProdutoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,7 +19,7 @@ public class ProdutoModel {
         return id;
     }
 
-    public ProdutoModel setId(Long id) {
+    public ProdutoEntity setId(Long id) {
         this.id = id;
         return this;
     }
@@ -28,7 +28,7 @@ public class ProdutoModel {
         return nome;
     }
 
-    public ProdutoModel setNome(String nome) {
+    public ProdutoEntity setNome(String nome) {
         this.nome = nome;
         return this;
     }
@@ -37,7 +37,7 @@ public class ProdutoModel {
         return quantidade;
     }
 
-    public ProdutoModel setQuantidade(Integer quantidade) {
+    public ProdutoEntity setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
         return this;
     }
